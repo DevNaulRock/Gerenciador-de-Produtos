@@ -15,5 +15,10 @@ namespace App.Models
         public double Quantidade { get; set; }
         public double Preco { get; set; }
 
+        public Produto()
+        {
+            Descricao = string.Empty; // Garantindo valor padrão ao sair do construtor
+        }
+
     }
 }

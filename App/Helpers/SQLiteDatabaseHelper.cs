@@ -60,5 +60,17 @@ namespace App.Helpers
         {
             return _conn.Table<T>();
         }
+
+        public Task<int> DeleteProdutoAsync(Produto produto)
+        {
+            return _conn.DeleteAsync(produto);
+        }
+
+        public Task<int> UpdateProdutoAsync(Produto produto)
+        {
+            return _conn.UpdateAsync(produto);
+        }
+
+
     }
 }

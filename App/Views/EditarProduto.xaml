@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.Views.EditarProduto"
-             Title="EditarProduto">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             xmlns:models="clr-namespace:App.Models"
+             x:Class="App.Views.EditarProduto">
+    <VerticalStackLayout Padding="10">
+        <Label Text="Editar Produto" FontSize="20" HorizontalOptions="Center" />
+        <Entry Placeholder="Descrição" Text="{Binding Produto.Descricao}" />
+        <Entry Placeholder="Quantidade" Text="{Binding Produto.Quantidade}" Keyboard="Numeric" />
+        <Entry Placeholder="Preço" Text="{Binding Produto.Preco}" Keyboard="Numeric" />
+        <Button Text="Salvar" Clicked="SalvarButton_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

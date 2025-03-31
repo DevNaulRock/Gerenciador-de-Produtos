@@ -7,7 +7,6 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Adicionar Produto" Clicked="AdicionarProdutoButton_Clicked"/>
     </ContentPage.ToolbarItems>
-
     <VerticalStackLayout>
         <!-- Barra de Pesquisa -->
         <SearchBar Placeholder="Pesquisar Produto" TextChanged="OnSearchBarTextChanged" />
@@ -16,11 +15,43 @@
         <CollectionView ItemsSource="{Binding ProdutosFiltrados}" Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Produto">
-                    <StackLayout Orientation="Horizontal" Padding="10">
-                        <Label Text="{Binding Descricao}" FontSize="16" />
-                        <Label Text="{Binding Quantidade}" FontSize="16" Margin="10,0,0,0" />
-                        <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" FontSize="16" Margin="10,0,0,0" />
-                    </StackLayout>
+                    <Border Stroke="LightGray" StrokeShape="RoundRectangle 8" Margin="5" Padding="10">
+                        <VerticalStackLayout>
+                            <!-- Detalhes do Produto -->
+                            <HorizontalStackLayout>
+                                <Label Text="Descrição:" FontAttributes="Bold" />
+                                <Label Text="{Binding Descricao}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Quantidade:" FontAttributes="Bold" />
+                                <Label Text="{Binding Quantidade}" />
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout>
+                                <Label Text="Preço:" FontAttributes="Bold" />
+                                <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" />
+                            </HorizontalStackLayout>
+
+                            <!-- Botões de Ação -->
+                            <HorizontalStackLayout HorizontalOptions="End">
+                                <Button Text="Editar"
+                                Clicked="EditarButton_Clicked"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Blue"
+                                TextColor="White"
+                                CornerRadius="5"
+                                Margin="0,10,10,0" />
+                                <Button Text="Remover"
+                                Clicked="RemoverButton_Clicked"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Red"
+                                TextColor="White"
+                                CornerRadius="5"
+                                Margin="0,10,0,0" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

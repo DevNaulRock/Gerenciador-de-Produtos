@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using App.Models;
 
 namespace App.Views;
@@ -66,13 +65,55 @@ public partial class ListaProduto : ContentPage
         }
     }
 
+    private void EditarButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Produto produto)
+        {
+            Navigation.PushAsync(new EditarProduto(produto));
+        }
+    }
+
+    private async void RemoverButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is Produto produto)
+        {
+            await RemoverProduto(produto);
+        }
+    }
+
+    private async Task RemoverProduto(Produto produto)
+    {
+        bool confirmarRemocao = await DisplayAlert("Confirmação",
+                                                   $"Deseja remover o produto {produto.Descricao}?",
+                                                   "Sim", "Não");
+        if (confirmarRemocao)
+        {
+            try
+            {
+                // Removendo o produto da base de dados
+                await App.DB.DeleteProdutoAsync(produto);
+
+                // Removendo o produto da coleção
+                Produtos.Remove(produto);
+
+                // Atualizando a coleção filtrada
+                AtualizarProdutosFiltrados();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+        }
+    }
+
     private void AtualizarProdutosFiltrados(string termoPesquisa = "")
     {
         // Limpa os produtos filtrados e adiciona os que correspondem ao termo
         ProdutosFiltrados.Clear();
         foreach (var produto in Produtos)
         {
-            if (string.IsNullOrWhiteSpace(termoPesquisa) || produto.Descricao.ToLower().Contains(termoPesquisa.ToLower()))
+            if (string.IsNullOrWhiteSpace(termoPesquisa) ||
+                produto.Descricao.Contains(termoPesquisa, StringComparison.OrdinalIgnoreCase))
             {
                 ProdutosFiltrados.Add(produto);
             }
